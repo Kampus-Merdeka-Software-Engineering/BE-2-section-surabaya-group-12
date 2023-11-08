@@ -1,19 +1,19 @@
 const express = require('express');
 
-const aboutController = require('');
+const AboutController = require('../controller/about');
 
 const router = express.Router();
 
 // Create - Post
-router.post('/', aboutController.createNewAbout);
+router.post('/', AboutController.createNewAbout);
 
 // Read - Get
-router.get('/', aboutController.getAllAbout);
+router.get('/', AboutController.getAllAbout);
 
 // Update - Patch
-router.patch('/:idAbout', aboutController.updateAbout);
+router.patch('/:idAbout', AboutController.updateAbout);
 
 // Delete - Delete
-router.delete('/:idAbout', aboutController.deleteAbout);
+router.delete('/:idAbout', AboutController.deleteAbout);
 
-exports.module = router;
+module.exports = router;

@@ -1,11 +1,11 @@
-const aboutModel = require('');
+const AboutModel = require('../models/about');
 
 const getAllAbout = async (req, res) => {
   try {
     const [data] = await AboutModel.getAllAbout();
 
     res.json({
-      message: 'Get All About Succes',
+      message: 'Get All About Successfully',
       data: data,
     });
   } catch (err) {
@@ -19,19 +19,23 @@ const getAllAbout = async (req, res) => {
 const createNewAbout = async (req, res) => {
   const { body } = req;
 
-  if (!body)
-    try {
-      await AboutModel.createNewAbout(body);
-      res.status(201).json({
-        message: 'Create New About successfully',
-        data: body,
-      });
-    } catch (err) {
-      res.status(500).json({
-        message: 'Server Error',
-        serverMessage: err,
-      });
-    }
+  if (!body.about_name || !body.about_position) {
+    return res.status(400).json({
+      message: 'You Submitted Incorrect Data!',
+    });
+  }
+  try {
+    await AboutModel.createNewAbout(body);
+    res.status(201).json({
+      message: 'Create New About Successfully',
+      data: body,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: err,
+    });
+  }
 };
 
 const updateAbout = async (req, res) => {
@@ -41,7 +45,7 @@ const updateAbout = async (req, res) => {
   try {
     await AboutModel.updateAbout(body, idAbout);
     res.json({
-      message: 'Update About Successfuly',
+      message: 'Update About Successfully',
       data: {
         id: idAbout,
         ...body,

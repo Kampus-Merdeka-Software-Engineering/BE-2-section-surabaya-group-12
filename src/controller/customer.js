@@ -1,11 +1,11 @@
-const CustumerModel = require('');
+const CustomerModel = require('../models/customer');
 
 const getAllCustomer = async (req, res) => {
   try {
     const [data] = await CustomerModel.getAllCustomer();
 
     res.json({
-      message: 'Get All Customer Succesfully',
+      message: 'Get All Customer Successfully',
       data: data,
     });
   } catch (err) {
@@ -19,31 +19,36 @@ const getAllCustomer = async (req, res) => {
 const createNewCustomer = async (req, res) => {
   const { body } = req;
 
-  if (!body)
-    try {
-      await CustomerModel.createNewCustomer(body);
-      res.status(201).json({
-        message: 'Create New Customer successfully',
-        data: body,
-      });
-    } catch (err) {
-      res.status(500).json({
-        message: 'Server Error',
-        serverMessage: err,
-      });
-    }
+  if (!body.customer_name || !body.customer_description) {
+    return res.status(400).json({
+      message: 'You Submitted Incorrect Data!',
+      data: null,
+    });
+  }
+  try {
+    await CustomerModel.createNewCustomer(body);
+    res.status(201).json({
+      message: 'Create New Customer Successfully',
+      data: body,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: err,
+    });
+  }
 };
 
 const updateCustomer = async (req, res) => {
-  const { idAbout } = req.params;
+  const { idCustomer } = req.params;
   const { body } = req;
 
   try {
-    await CustomerModel.updateCustomer(body, idAbout);
+    await CustomerModel.updateCustomer(body, idCustomer);
     res.json({
-      message: 'Update Customer Successfuly',
+      message: 'Update Customer Successfully',
       data: {
-        id: idAbout,
+        id: idCustomer,
         ...body,
       },
     });
@@ -58,7 +63,7 @@ const updateCustomer = async (req, res) => {
 const deleteCustomer = async (req, res) => {
   const { idCustomer } = req.params;
   try {
-    await AboutModel.deleteAbout(idAbout);
+    await AboutModel.deleteCustomer(idCustomer);
     res.json({
       message: 'Delete About Successfully',
       data: null,

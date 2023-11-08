@@ -1,11 +1,11 @@
-const eventModel = require('');
+const EventModel = require('../models/event');
 
 const getAllEvent = async (req, res) => {
   try {
     const [data] = await EventModel.getAllEvent();
 
     res.json({
-      message: 'Get All Event Succes',
+      message: 'Get All Event Successfully',
       data: data,
     });
   } catch (err) {
@@ -19,19 +19,24 @@ const getAllEvent = async (req, res) => {
 const createNewEvent = async (req, res) => {
   const { body } = req;
 
-  if (!body)
-    try {
-      await EventModel.createNewEvent(body);
-      res.status(201).json({
-        message: 'Create New Event successfully',
-        data: body,
-      });
-    } catch (err) {
-      res.status(500).json({
-        message: 'Server Error',
-        serverMessage: err,
-      });
-    }
+  if (!body.event_name || !body.event_detail || !body.event_description) {
+    res.status(400).json({
+      message: 'You Submitted Incorrect Data!',
+      data: null,
+    });
+  }
+  try {
+    await EventModel.createNewEvent(body);
+    res.status(201).json({
+      message: 'Create New Event Successfully',
+      data: body,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: err,
+    });
+  }
 };
 
 const updateEvent = async (req, res) => {
@@ -39,9 +44,9 @@ const updateEvent = async (req, res) => {
   const { body } = req;
 
   try {
-    await EventModel.updateAbout(body, idAbout);
+    await EventModel.updateEvent(body, idEvent);
     res.json({
-      message: 'Update Event Successfuly',
+      message: 'Update Event Successfully',
       data: {
         id: idEvent,
         ...body,

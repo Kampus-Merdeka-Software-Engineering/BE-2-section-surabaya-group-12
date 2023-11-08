@@ -1,11 +1,11 @@
-const roomModel = require('');
+const RoomModel = require('../models/room');
 
 const getAllRoom = async (req, res) => {
   try {
     const [data] = await RoomModel.getAllRoom();
 
     res.json({
-      message: 'Get All Room Succes',
+      message: 'Get All Room Successfully',
       data: data,
     });
   } catch (err) {
@@ -19,19 +19,24 @@ const getAllRoom = async (req, res) => {
 const createNewRoom = async (req, res) => {
   const { body } = req;
 
-  if (!body)
-    try {
-      await RoomModel.createNewRoom(body);
-      res.status(201).json({
-        message: 'Create New Room successfully',
-        data: body,
-      });
-    } catch (err) {
-      res.status(500).json({
-        message: 'Server Error',
-        serverMessage: err,
-      });
-    }
+  if (!body.room_type || !body.room_price) {
+    res.status(400).json({
+      message: 'You Submitted Incorrect Data!',
+      data: null,
+    });
+  }
+  try {
+    await RoomModel.createNewRoom(body);
+    res.status(201).json({
+      message: 'Create New Room Successfully',
+      data: body,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: err,
+    });
+  }
 };
 
 const updateRoom = async (req, res) => {
@@ -41,7 +46,7 @@ const updateRoom = async (req, res) => {
   try {
     await RoomModel.updateRoom(body, idRoom);
     res.json({
-      message: 'Update Room Successfuly',
+      message: 'Update Room Successfully',
       data: {
         id: idRoom,
         ...body,
