@@ -4,7 +4,7 @@ const getAllCustomer = async (req, res) => {
   try {
     const [data] = await CustomerModel.getAllCustomer();
 
-    res.json({
+    res.status(200).json({
       message: 'Get All Customer Successfully',
       data: data,
     });
@@ -45,7 +45,7 @@ const updateCustomer = async (req, res) => {
 
   try {
     await CustomerModel.updateCustomer(body, idCustomer);
-    res.json({
+    res.status(201).json({
       message: 'Update Customer Successfully',
       data: {
         id: idCustomer,
@@ -64,7 +64,7 @@ const deleteCustomer = async (req, res) => {
   const { idCustomer } = req.params;
   try {
     await AboutModel.deleteCustomer(idCustomer);
-    res.json({
+    res.status(200).json({
       message: 'Delete About Successfully',
       data: null,
     });

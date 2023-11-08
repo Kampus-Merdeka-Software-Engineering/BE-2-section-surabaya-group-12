@@ -4,7 +4,7 @@ const getAllEvent = async (req, res) => {
   try {
     const [data] = await EventModel.getAllEvent();
 
-    res.json({
+    res.status(200).json({
       message: 'Get All Event Successfully',
       data: data,
     });
@@ -45,7 +45,7 @@ const updateEvent = async (req, res) => {
 
   try {
     await EventModel.updateEvent(body, idEvent);
-    res.json({
+    res.status(201).json({
       message: 'Update Event Successfully',
       data: {
         id: idEvent,
@@ -64,7 +64,7 @@ const deleteEvent = async (req, res) => {
   const { idEvent } = req.params;
   try {
     await EventModel.deleteEvent(idEvent);
-    res.json({
+    res.status(200).json({
       message: 'Delete Event Successfully',
       data: null,
     });

@@ -4,7 +4,7 @@ const getAllRoom = async (req, res) => {
   try {
     const [data] = await RoomModel.getAllRoom();
 
-    res.json({
+    res.status(200).json({
       message: 'Get All Room Successfully',
       data: data,
     });
@@ -45,7 +45,7 @@ const updateRoom = async (req, res) => {
 
   try {
     await RoomModel.updateRoom(body, idRoom);
-    res.json({
+    res.status(201).json({
       message: 'Update Room Successfully',
       data: {
         id: idRoom,
@@ -64,7 +64,7 @@ const deleteRoom = async (req, res) => {
   const { idRoom } = req.params;
   try {
     await RoomModel.deleteRoom(idRoom);
-    res.json({
+    res.status(200).json({
       message: 'Delete Room Successfully',
       data: null,
     });

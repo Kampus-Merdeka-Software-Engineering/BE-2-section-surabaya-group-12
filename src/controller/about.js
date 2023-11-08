@@ -4,7 +4,7 @@ const getAllAbout = async (req, res) => {
   try {
     const [data] = await AboutModel.getAllAbout();
 
-    res.json({
+    res.status(200).json({
       message: 'Get All About Successfully',
       data: data,
     });
@@ -44,7 +44,7 @@ const updateAbout = async (req, res) => {
 
   try {
     await AboutModel.updateAbout(body, idAbout);
-    res.json({
+    res.status(201).json({
       message: 'Update About Successfully',
       data: {
         id: idAbout,
@@ -63,7 +63,7 @@ const deleteAbout = async (req, res) => {
   const { idAbout } = req.params;
   try {
     await AboutModel.deleteAbout(idAbout);
-    res.json({
+    res.status(200).json({
       message: 'Delete About Successfully',
       data: null,
     });
