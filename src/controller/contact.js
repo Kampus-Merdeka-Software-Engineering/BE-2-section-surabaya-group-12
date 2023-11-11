@@ -1,11 +1,11 @@
-const RoomModel = require('../models/room');
+const ContactModel = require('../models/contact');
 
-const getAllRoom = async (req, res) => {
+const getAllContact = async (req, res) => {
   try {
-    const [data] = await RoomModel.getAllRoom();
+    const [data] = await ContactModel.getAllContact();
 
     res.status(200).json({
-      message: 'Get All Room Successfully',
+      message: 'Get All Contact Successfully',
       data: data,
     });
   } catch (err) {
@@ -16,19 +16,19 @@ const getAllRoom = async (req, res) => {
   }
 };
 
-const createNewRoom = async (req, res) => {
+const createNewContact = async (req, res) => {
   const { body } = req;
 
-  if (!body.room_type || !body.room_price) {
+  if (!body.contact_fullname || !body.contact_email || !body.contact_phone || !body.contact_message) {
     res.status(400).json({
       message: 'You Submitted Incorrect Data!',
       data: null,
     });
   }
   try {
-    await RoomModel.createNewRoom(body);
+    await ContactModel.createNewContact(body);
     res.status(201).json({
-      message: 'Create New Room Successfully',
+      message: 'Create New Contact Successfully',
       data: body,
     });
   } catch (err) {
@@ -39,22 +39,22 @@ const createNewRoom = async (req, res) => {
   }
 };
 
-const updateRoom = async (req, res) => {
-  const { idRoom } = req.params;
+const updateContact = async (req, res) => {
+  const { idContact } = req.params;
   const { body } = req;
 
-  if (!body.room_type || !body.room_price) {
+  if (!body.contact_fullname || !body.contact_email || !body.contact_phone || !body.contact_message) {
     res.status(400).json({
       message: 'You Submitted Incorrect Data!',
       data: null,
     });
   }
   try {
-    await RoomModel.updateRoom(body, idRoom);
+    await ContactModel.updateContact(body, idContact);
     res.status(201).json({
-      message: 'Update Room Successfully',
+      message: 'Update Contact Successfully',
       data: {
-        id: idRoom,
+        id: idContact,
         ...body,
       },
     });
@@ -66,12 +66,12 @@ const updateRoom = async (req, res) => {
   }
 };
 
-const deleteRoom = async (req, res) => {
-  const { idRoom } = req.params;
+const deleteContact = async (req, res) => {
+  const { idContact } = req.params;
   try {
-    await RoomModel.deleteRoom(idRoom);
+    await ContactModel.deleteContact(idContact);
     res.status(200).json({
-      message: 'Delete Room Successfully',
+      message: 'Delete Contact Successfully',
       data: null,
     });
   } catch (err) {
@@ -83,8 +83,8 @@ const deleteRoom = async (req, res) => {
 };
 
 module.exports = {
-  getAllRoom,
-  createNewRoom,
-  updateRoom,
-  deleteRoom,
+  getAllContact,
+  createNewContact,
+  updateContact,
+  deleteContact,
 };

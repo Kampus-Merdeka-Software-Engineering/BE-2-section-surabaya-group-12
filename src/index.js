@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 
 const roomRoutes = require('./routes/room');
-const eventRoutes = require('./routes/event');
+const contactRoutes = require('./routes/contact');
 const aboutRoutes = require('./routes/about');
 const customerRoutes = require('./routes/customer');
 
@@ -17,7 +17,7 @@ app.use(middlewareLogRequest);
 app.use(express.json());
 
 app.use('/room', roomRoutes);
-app.use('/event', eventRoutes);
+app.use('/contact', contactRoutes);
 app.use('/customer', customerRoutes);
 app.use('/about', aboutRoutes);
 

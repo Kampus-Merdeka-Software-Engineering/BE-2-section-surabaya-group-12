@@ -42,6 +42,11 @@ const updateAbout = async (req, res) => {
   const { idAbout } = req.params;
   const { body } = req;
 
+  if (!body.about_name || !body.about_position) {
+    return res.status(400).json({
+      message: 'You Submitted Incorrect Data!',
+    });
+  }
   try {
     await AboutModel.updateAbout(body, idAbout);
     res.status(201).json({
