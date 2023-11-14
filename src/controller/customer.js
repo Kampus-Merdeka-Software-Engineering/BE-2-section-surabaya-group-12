@@ -16,6 +16,23 @@ const getAllCustomer = async (req, res) => {
   }
 };
 
+const getOneCustomer = async (req, res) => {
+  const { idCustomer } = req.params;
+
+  try {
+    const [data] = await CustomerModel.getOneCustomer(idCustomer);
+    res.status(200).json({
+      message: 'Get One Customer Successfully',
+      data: data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: err,
+    });
+  }
+};
+
 const createNewCustomer = async (req, res) => {
   const { body } = req;
 
@@ -69,7 +86,7 @@ const updateCustomer = async (req, res) => {
 const deleteCustomer = async (req, res) => {
   const { idCustomer } = req.params;
   try {
-    await AboutModel.deleteCustomer(idCustomer);
+    await CustomerModel.deleteCustomer(idCustomer);
     res.status(200).json({
       message: 'Delete About Successfully',
       data: null,
@@ -84,6 +101,7 @@ const deleteCustomer = async (req, res) => {
 
 module.exports = {
   getAllCustomer,
+  getOneCustomer,
   createNewCustomer,
   updateCustomer,
   deleteCustomer,

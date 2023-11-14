@@ -10,6 +10,9 @@ router.post('/', AboutController.createNewAbout);
 // Read - Get
 router.get('/', AboutController.getAllAbout);
 
+// Read - Get 1
+router.get('/:idAbout', AboutController.getOneAbout);
+
 // Update - Patch
 router.patch('/:idAbout', AboutController.updateAbout);
 

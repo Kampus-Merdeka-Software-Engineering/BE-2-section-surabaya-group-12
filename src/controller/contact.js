@@ -16,6 +16,22 @@ const getAllContact = async (req, res) => {
   }
 };
 
+const getOneContact = async (req, res) => {
+  const { idContact } = req.params;
+  try {
+    const [data] = await ContactModel.getOneContact(idContact);
+    res.status(200).json({
+      message: 'Get One Contact Successfully',
+      data: data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: err,
+    });
+  }
+};
+
 const createNewContact = async (req, res) => {
   const { body } = req;
 
@@ -84,6 +100,7 @@ const deleteContact = async (req, res) => {
 
 module.exports = {
   getAllContact,
+  getOneContact,
   createNewContact,
   updateContact,
   deleteContact,

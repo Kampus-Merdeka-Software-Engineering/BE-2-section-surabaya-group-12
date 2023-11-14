@@ -16,6 +16,24 @@ const getAllRoom = async (req, res) => {
   }
 };
 
+const getOneRoom = async (req, res) => {
+  const { idRoom } = req.params;
+
+  try {
+    const [data] = await RoomModel.getOneRoom(idRoom);
+
+    res.status(200).json({
+      message: 'Get One Room Successfully',
+      data: data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: err,
+    });
+  }
+};
+
 const createNewRoom = async (req, res) => {
   const { body } = req;
 
@@ -84,6 +102,7 @@ const deleteRoom = async (req, res) => {
 
 module.exports = {
   getAllRoom,
+  getOneRoom,
   createNewRoom,
   updateRoom,
   deleteRoom,

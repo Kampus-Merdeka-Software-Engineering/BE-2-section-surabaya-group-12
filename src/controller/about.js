@@ -16,10 +16,27 @@ const getAllAbout = async (req, res) => {
   }
 };
 
+const getOneAbout = async (req, res) => {
+  const { idAbout } = req.params;
+
+  try {
+    const [data] = await AboutModel.getOneAbout(idAbout);
+    res.status(200).json({
+      message: 'Get One About Successfully',
+      data: data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: err,
+    });
+  }
+};
+
 const createNewAbout = async (req, res) => {
   const { body } = req;
 
-  if (!body.about_name || !body.about_position) {
+  if (!body.about_fullname || !body.about_position) {
     return res.status(400).json({
       message: 'You Submitted Incorrect Data!',
     });
@@ -42,7 +59,7 @@ const updateAbout = async (req, res) => {
   const { idAbout } = req.params;
   const { body } = req;
 
-  if (!body.about_name || !body.about_position) {
+  if (!body.about_fullname || !body.about_position) {
     return res.status(400).json({
       message: 'You Submitted Incorrect Data!',
     });
@@ -82,6 +99,7 @@ const deleteAbout = async (req, res) => {
 
 module.exports = {
   getAllAbout,
+  getOneAbout,
   createNewAbout,
   updateAbout,
   deleteAbout,

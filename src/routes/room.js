@@ -10,8 +10,11 @@ router.post('/', RoomController.createNewRoom);
 // Read - Get
 router.get('/', RoomController.getAllRoom);
 
+// Read - Get 1
+router.get('/:idRoom', RoomController.getOneRoom);
+
 // Update - Patch
-router.get('/:idRoom', RoomController.updateRoom);
+router.patch('/:idRoom', RoomController.updateRoom);
 
 // Delete - Delete
 router.delete('/:idRoom', RoomController.deleteRoom);
