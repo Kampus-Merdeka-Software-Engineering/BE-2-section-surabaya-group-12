@@ -2,7 +2,7 @@ const ContactModel = require('../models/contact');
 
 const getAllContact = async (req, res) => {
   try {
-    const [data] = await ContactModel.getAllContact();
+    const data = await ContactModel.getAllContact();
 
     res.status(200).json({
       message: 'Get All Contact Successfully',
@@ -19,7 +19,7 @@ const getAllContact = async (req, res) => {
 const getOneContact = async (req, res) => {
   const { idContact } = req.params;
   try {
-    const [data] = await ContactModel.getOneContact(idContact);
+    const data = await ContactModel.getOneContact(idContact);
     res.status(200).json({
       message: 'Get One Contact Successfully',
       data: data,

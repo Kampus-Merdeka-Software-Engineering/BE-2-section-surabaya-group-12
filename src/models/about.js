@@ -1,34 +1,52 @@
-const dbPool = require('../config/database');
+const prisma = require('../config/prisma');
 
-const getAllAbout = () => {
-  const SQLQuery = 'SELECT * FROM about';
-
-  return dbPool.execute(SQLQuery);
+const getAllAbout = async () => {
+  const findManyAbout = await prisma.about.findMany();
+  return findManyAbout;
 };
 
-const getOneAbout = (idAbout) => {
-  const SQLQuery = `SELECT * FROM about WHERE id=${idAbout}`;
-
-  return dbPool.execute(SQLQuery);
+const getOneAbout = async (idAbout) => {
+  const findOneAbout = await prisma.about.findUnique({
+    where: {
+      id: parseInt(idAbout),
+    },
+  });
+  return findOneAbout;
 };
 
-const createNewAbout = (body) => {
-  const SQLQuery = `INSERT INTO about (about_fullname, about_position) VALUES ('${body.about_fullname}', '${body.about_position}')`;
-
-  return dbPool.execute(SQLQuery);
+const createNewAbout = async (body) => {
+  const createOneAbout = await prisma.about.create({
+    data: body,
+  });
+  return createOneAbout;
 };
 
-const updateAbout = (body, idAbout) => {
-  const SQLQuery = `UPDATE about 
-  SET about_fullname='${body.about_fullname}', about_position='${body.about_position}' WHERE id=${idAbout}`;
-
-  return dbPool.execute(SQLQuery);
+const updateAbout = async (body, idAbout) => {
+  const updateAboutData = {
+    /* data destructuring body
+    id: idAbout,
+    created_at: created_at,
+    about_fullname: body.about_fullname,
+    about_position: body.about_position, 
+    */
+    ...body,
+  };
+  const updateOneAbout = await prisma.about.update({
+    where: {
+      id: parseInt(idAbout),
+    },
+    data: updateAboutData,
+  });
+  return updateOneAbout;
 };
 
-const deleteAbout = (idAbout) => {
-  const SQLQuery = `DELETE FROM about WHERE id=${idAbout}`;
-
-  return dbPool.execute(SQLQuery);
+const deleteAbout = async (idAbout) => {
+  const deleteOneAbout = await prisma.about.delete({
+    where: {
+      id: parseInt(idAbout),
+    },
+  });
+  return deleteOneAbout;
 };
 
 module.exports = {

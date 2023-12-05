@@ -2,7 +2,7 @@ const AboutModel = require('../models/about');
 
 const getAllAbout = async (req, res) => {
   try {
-    const [data] = await AboutModel.getAllAbout();
+    const data = await AboutModel.getAllAbout();
 
     res.status(200).json({
       message: 'Get All About Successfully',
@@ -20,7 +20,7 @@ const getOneAbout = async (req, res) => {
   const { idAbout } = req.params;
 
   try {
-    const [data] = await AboutModel.getOneAbout(idAbout);
+    const data = await AboutModel.getOneAbout(idAbout);
     res.status(200).json({
       message: 'Get One About Successfully',
       data: data,

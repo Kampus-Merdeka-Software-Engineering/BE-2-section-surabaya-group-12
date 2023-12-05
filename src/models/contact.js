@@ -1,33 +1,53 @@
-const dbPool = require('../config/database');
+const prisma = require('../config/prisma');
 
-const getAllContact = () => {
-  const SQLQuery = 'SELECT * FROM contact';
-
-  return dbPool.execute(SQLQuery);
+const getAllContact = async () => {
+  const findManyContact = await prisma.contact.findMany();
+  return findManyContact;
 };
 
-const getOneContact = (idContact) => {
-  const SQLQuery = `SELECT * FROM contact WHERE id=${idContact}`;
-
-  return dbPool.execute(SQLQuery);
+const getOneContact = async (idContact) => {
+  const findOneContact = await prisma.contact.findUnique({
+    where: {
+      id: parseInt(idContact),
+    },
+  });
+  return findOneContact;
 };
 
-const createNewContact = (body) => {
-  const SQLQuery = `INSERT INTO contact (contact_fullname, contact_email, contact_phone, contact_message) VALUES ('${body.contact_fullname}', '${body.contact_email}', '${body.contact_phone}', '${body.contact_message}')`;
-
-  return dbPool.execute(SQLQuery);
+const createNewContact = async (body) => {
+  const createOneContact = await prisma.contact.create({
+    data: body,
+  });
+  return createOneContact;
 };
 
-const updateContact = (body, idContact) => {
-  const SQLQuery = `UPDATE contact SET contact_fullname = '${body.contact_fullname}', contact_email = '${body.contact_email}', contact_phone = '${body.contact_phone}', contact_message = '${body.contact_message}' WHERE id = '${idContact}'`;
+const updateContact = async (body, idContact) => {
+  const updateContactData = {
+    /* data destructuring body
+    contact_fullname: body.contact_fullname,
+    contact_email: body.contact_email,
+    contact_phone: body.contact_phone,
+    contact_message: body.contact.message, 
+    */
+    ...body,
+  };
 
-  return dbPool.execute(SQLQuery);
+  const updateOneContact = await prisma.contact.update({
+    where: {
+      id: parseInt(idContact),
+    },
+    data: updateContactData,
+  });
+  return updateOneContact;
 };
 
-const deleteContact = (idContact) => {
-  const SQLQuery = `DELETE FROM contact WHERE id=${idContact}`;
-
-  return dbPool.execute(SQLQuery);
+const deleteContact = async (idContact) => {
+  const deleteOneContact = await prisma.contact.delete({
+    where: {
+      id: parseInt(idContact),
+    },
+  });
+  return deleteOneContact;
 };
 
 module.exports = {

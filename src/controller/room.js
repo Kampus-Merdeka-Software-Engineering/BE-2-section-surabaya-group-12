@@ -2,7 +2,7 @@ const RoomModel = require('../models/room');
 
 const getAllRoom = async (req, res) => {
   try {
-    const [data] = await RoomModel.getAllRoom();
+    const data = await RoomModel.getAllRoom();
 
     res.status(200).json({
       message: 'Get All Room Successfully',
@@ -18,9 +18,8 @@ const getAllRoom = async (req, res) => {
 
 const getOneRoom = async (req, res) => {
   const { idRoom } = req.params;
-
   try {
-    const [data] = await RoomModel.getOneRoom(idRoom);
+    const data = await RoomModel.getOneRoom(idRoom);
 
     res.status(200).json({
       message: 'Get One Room Successfully',

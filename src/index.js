@@ -15,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(middlewareLogRequest);
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/room', roomRoutes);
 app.use('/contact', contactRoutes);

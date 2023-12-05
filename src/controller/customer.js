@@ -2,7 +2,7 @@ const CustomerModel = require('../models/customer');
 
 const getAllCustomer = async (req, res) => {
   try {
-    const [data] = await CustomerModel.getAllCustomer();
+    const data = await CustomerModel.getAllCustomer();
 
     res.status(200).json({
       message: 'Get All Customer Successfully',
@@ -20,7 +20,7 @@ const getOneCustomer = async (req, res) => {
   const { idCustomer } = req.params;
 
   try {
-    const [data] = await CustomerModel.getOneCustomer(idCustomer);
+    const data = await CustomerModel.getOneCustomer(idCustomer);
     res.status(200).json({
       message: 'Get One Customer Successfully',
       data: data,

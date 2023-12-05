@@ -1,33 +1,51 @@
-const dbPool = require('../config/database');
+const prisma = require('../config/prisma');
 
-const getAllRoom = () => {
-  const SQLQuery = 'SELECT * FROM room';
-
-  return dbPool.execute(SQLQuery);
+const getAllRoom = async () => {
+  const findManyRoom = await prisma.room.findMany();
+  return findManyRoom;
 };
 
-const getOneRoom = (idRoom) => {
-  const SQLQuery = `SELECT * FROM room WHERE id = ${idRoom}`;
-
-  return dbPool.execute(SQLQuery);
+const getOneRoom = async (idRoom) => {
+  const findOneRoom = await prisma.room.findUnique({
+    where: {
+      id: parseInt(idRoom),
+    },
+  });
+  return findOneRoom;
 };
 
-const createNewRoom = (body) => {
-  const SQLQuery = `INSERT INTO room (room_type, room_price) VALUES ('${body.room_type}', '${body.room_price}')`;
-
-  return dbPool.execute(SQLQuery);
+const createNewRoom = async (body) => {
+  const createOneRoom = await prisma.room.create({
+    data: body,
+  });
+  return createOneRoom;
 };
 
-const updateRoom = (body, idRoom) => {
-  const SQLQuery = `UPDATE room SET room_type = '${body.room_type}', room_price = '${body.room_price}' WHERE id = '${idRoom}'`;
+const updateRoom = async (body, idRoom) => {
+  const updateRoomData = {
+    /* data destructuring body
+    room_type: body.room_type,
+    room_price: body.room.price, 
+    */
+    ...body,
+  };
 
-  return dbPool.execute(SQLQuery);
+  const updateOneRoom = await prisma.room.update({
+    where: {
+      id: parseInt(idRoom),
+    },
+    data: updateRoomData,
+  });
+  return updateOneRoom;
 };
 
-const deleteRoom = (idRoom) => {
-  const SQLQuery = `DELETE FROM room WHERE id=${idRoom}`;
-
-  return dbPool.execute(SQLQuery);
+const deleteRoom = async (idRoom) => {
+  const deleteOneRoom = await prisma.room.delete({
+    where: {
+      id: parseInt(idRoom),
+    },
+  });
+  return deleteOneRoom;
 };
 
 module.exports = {

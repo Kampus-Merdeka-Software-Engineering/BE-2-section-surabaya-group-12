@@ -1,33 +1,50 @@
-const dbPool = require('../config/database');
+const prisma = require('../config/prisma');
 
-const getAllCustomer = () => {
-  const SQLQuery = 'SELECT * FROM customer';
-
-  return dbPool.execute(SQLQuery);
+const getAllCustomer = async () => {
+  const findManyCustomer = await prisma.customer.findMany();
+  return findManyCustomer;
 };
 
-const getOneCustomer = (idCustomer) => {
-  const SQLQuery = `SELECT * FROM customer WHERE id = ${idCustomer}`;
-
-  return dbPool.execute(SQLQuery);
+const getOneCustomer = async (idCustomer) => {
+  const findOneCustomer = await prisma.customer.findUnique({
+    where: {
+      id: parseInt(idCustomer),
+    },
+  });
+  return findOneCustomer;
 };
 
-const createNewCustomer = (body) => {
-  const SQLQuery = `INSERT INTO customer (customer_name, customer_description) VALUES ('${body.customer_name}', '${body.customer_description}')`;
-
-  return dbPool.execute(SQLQuery);
+const createNewCustomer = async (body) => {
+  const createOneCustomer = await prisma.customer.create({
+    data: body,
+  });
+  return createOneCustomer;
 };
 
-const updateCustomer = (body, idCustomer) => {
-  const SQLQuery = `UPDATE customer SET customer_name = '${body.customer_name}', customer_description = '${body.customer_description}' WHERE id = '${idCustomer}'`;
-
-  return dbPool.execute(SQLQuery);
+const updateCustomer = async (body, idCustomer) => {
+  const updateCustomerData = {
+    /* data destructuring body
+    customer_name: body.customer_name,
+    customer_description: body.customer_description,
+    */
+    ...body,
+  };
+  const updateOneCustomer = await prisma.customer.update({
+    where: {
+      id: parseInt(idCustomer),
+    },
+    data: updateCustomerData,
+  });
+  return updateOneCustomer;
 };
 
-const deleteCustomer = (idCustomer) => {
-  const SQLQuery = `DELETE FROM customer WHERE id=${idCustomer}`;
-
-  return dbPool.execute(SQLQuery);
+const deleteCustomer = async (idCustomer) => {
+  const deleteOneCustomer = await prisma.customer.delete({
+    where: {
+      id: parseInt(idCustomer),
+    },
+  });
+  return deleteOneCustomer;
 };
 
 module.exports = {
