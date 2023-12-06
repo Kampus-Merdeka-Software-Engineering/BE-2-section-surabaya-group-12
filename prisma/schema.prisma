@@ -29,7 +29,7 @@ model Contact {
   created_at DateTime @default(now())
   contact_fullname String @db.VarChar(50)
   contact_email String @db.VarChar(50)
-  contact_phone BigInt
+  contact_phone BigInt @db.BigInt()
   contact_message String @db.VarChar(500)
 }
 
