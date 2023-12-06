@@ -8,7 +8,7 @@
 - Tyara Sudrajat (QA)
 
 ## Requirement Specification
-### FE 
+### FE [Link Github Page](https://kampus-merdeka-software-engineering.github.io/FE-2-surabaya-12/)
 - Native HTML, CSS, Javascript, Font-Awesome.
 ### BE
 - Framework : Express JS.
