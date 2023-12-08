@@ -11,13 +11,14 @@ const getAllContact = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       message: 'Server Error',
-      serverMessage: err,
+      serverMessage: err.message,
     });
   }
 };
 
 const getOneContact = async (req, res) => {
   const { idContact } = req.params;
+
   try {
     const data = await ContactModel.getOneContact(idContact);
     res.status(200).json({
@@ -27,7 +28,7 @@ const getOneContact = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       message: 'Server Error',
-      serverMessage: err,
+      serverMessage: err.message,
     });
   }
 };

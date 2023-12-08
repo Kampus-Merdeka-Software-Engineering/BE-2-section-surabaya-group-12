@@ -24,7 +24,7 @@ CREATE TABLE `Contact` (
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `contact_fullname` VARCHAR(50) NOT NULL,
     `contact_email` VARCHAR(50) NOT NULL,
-    `contact_phone` BIGINT NOT NULL,
+    `contact_phone` VARCHAR(16) NOT NULL,
     `contact_message` VARCHAR(500) NOT NULL,
 
     PRIMARY KEY (`id`)

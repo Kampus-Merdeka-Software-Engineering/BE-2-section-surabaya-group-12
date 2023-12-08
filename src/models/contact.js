@@ -1,5 +1,19 @@
 const prisma = require('../config/prisma');
 
+// const getAllContact = async () => {
+//   const findManyContact = await prisma.contact.findMany();
+//   return findManyContact;
+// };
+
+// const getOneContact = async (idContact) => {
+//   const findOneContact = await prisma.contact.findUnique({
+//     where: {
+//       id: parseInt(idContact),
+//     },
+//   });
+//   return findOneContact;
+// };
+
 const getAllContact = async () => {
   const findManyContact = await prisma.contact.findMany();
   return findManyContact;
